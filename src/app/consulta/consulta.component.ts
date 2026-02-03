@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,17 +13,27 @@ import { Cliente } from '../cadastro/cliente';
 
 @Component({
   selector: 'app-consulta',
-  imports: [FlexLayoutModule, MatCardModule, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule, MatButtonModule],
+  imports: [
+    FlexLayoutModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    CommonModule],
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.scss'
 })
-export class ConsultaComponent implements OnInit {
+export class ConsultaComponent implements OnInit { // implementação da interface OnInit não é necessário nessa versão do angular. Manter apenas para compatibilidade.
   listaClientes: Cliente[] = [];
+  colunasTable: string[] = ["id", "nome", "cpf", "dataNascimento", "email"];
   constructor(private service: ClienteService) {
 
   }
 
   ngOnInit(): void {
-
+    this.listaClientes = this.service.pesquisarClientes('');
   }
 }
