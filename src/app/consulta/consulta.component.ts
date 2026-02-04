@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ClienteService } from '../cliente.service';
 import { Cliente } from '../cadastro/cliente';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consulta',
@@ -27,9 +28,13 @@ import { Cliente } from '../cadastro/cliente';
   styleUrl: './consulta.component.scss'
 })
 export class ConsultaComponent implements OnInit { // implementação da interface OnInit não é necessário nessa versão do angular. Manter apenas para compatibilidade.
+  nomeBusca: string = '';
   listaClientes: Cliente[] = [];
-  colunasTable: string[] = ["id", "nome", "cpf", "dataNascimento", "email"];
-  constructor(private service: ClienteService) {
+  colunasTable: string[] = ["id", "nome", "cpf", "dataNascimento", "email", "acoes"];
+  constructor(
+    private service: ClienteService,
+    private router: Router
+  ) {
 
   }
 
@@ -38,6 +43,10 @@ export class ConsultaComponent implements OnInit { // implementação da interfa
   }
 
   pesquisar() {
+    this.listaClientes = this.service.pesquisarClientes(this.nomeBusca);
+  }
 
+  preparaEditar(id: string) {
+    this.router.navigate(['/cadastro'], { queryParams: { "id": id } })
   }
 }
