@@ -36,4 +36,8 @@ export class ConsultaComponent implements OnInit { // implementação da interfa
   ngOnInit(): void {
     this.listaClientes = this.service.pesquisarClientes('');
   }
+
+  pesquisar() {
+
+  }
 }
